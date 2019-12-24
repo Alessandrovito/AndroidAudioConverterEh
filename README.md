@@ -59,7 +59,7 @@ AndroidAudioConverter.with(this)
     .setFile(flacFile)  
     
     // Your desired audio format 
-    .setFormat(AudioFormat.MP3)
+    .setFormat(AudioFormat.M4A)
     
     // An callback to know when conversion is finished
     .setCallback(callback)
@@ -78,15 +78,12 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
+  compile 'com.github.alessandrovito:AndroidAudioConverterEh:0.0.8'
 }
 ```
 
 ## Dependencies
 * [FFmpeg-Android-Java](https://github.com/WritingMinds/ffmpeg-android-java)
-
-## Want to RECORD AUDIO into your app?
-**Take a look at [AndroidAudioRecorder](https://github.com/adrielcafe/AndroidAudioRecorder)! Example of usage [here](https://github.com/adrielcafe/AndroidAudioRecorder/issues/8#issuecomment-247311572).**
 
 ## License
 ```
