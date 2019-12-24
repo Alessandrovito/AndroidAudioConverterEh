@@ -21,7 +21,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('libs/FFmpegAndroid-release.aar')
+   // implementation files('libs/FFmpegAndroid-release.aar')
    // implementation 'com.github.adrielcafe:ffmpeg-android-java:2a627f6ecd@aar'
-  //  implementation project(":FFmpegAndroid-release")
+    implementation project(":FFmpegAndroid")
 }
