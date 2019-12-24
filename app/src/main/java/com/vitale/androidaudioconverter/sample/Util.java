@@ -1,4 +1,4 @@
-package cafe.adriel.androidaudioconverter.sample;
+package com.vitale.androidaudioconverter.sample;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;

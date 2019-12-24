@@ -1,9 +1,9 @@
-package cafe.adriel.androidaudioconverter.sample;
+package com.vitale.androidaudioconverter.sample;
 
 import android.app.Application;
 
-import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
-import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
+import com.vitale.androidaudioconverter.AndroidAudioConverter;
+import com.vitale.androidaudioconverter.callback.ILoadCallback;
 
 public class App extends Application {
     @Override

@@ -1,17 +1,16 @@
-package cafe.adriel.androidaudioconverter;
+package com.vitale.androidaudioconverter;
 
 import android.content.Context;
 
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.FFmpegExecuteResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
+import com.vitale.androidaudioconverter.callback.IConvertCallback;
+import com.vitale.androidaudioconverter.callback.ILoadCallback;
+import com.vitale.androidaudioconverter.model.AudioFormat;
 
 import java.io.File;
 import java.io.IOException;
-
-import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
-import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
-import cafe.adriel.androidaudioconverter.model.AudioFormat;
 
 public class AndroidAudioConverter {
 

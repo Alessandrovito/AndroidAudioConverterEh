@@ -1,4 +1,4 @@
-package cafe.adriel.androidaudioconverter.sample;
+package com.vitale.androidaudioconverter.sample;
 
 import android.Manifest;
 import android.graphics.drawable.ColorDrawable;
@@ -8,11 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.vitale.androidaudioconverter.AndroidAudioConverter;
+import com.vitale.androidaudioconverter.callback.IConvertCallback;
+import com.vitale.androidaudioconverter.model.AudioFormat;
+
 import java.io.File;
 
-import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
-import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
-import cafe.adriel.androidaudioconverter.model.AudioFormat;
 
 public class MainActivity extends AppCompatActivity {
 
