@@ -1,8 +1,7 @@
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidAudioConverterEh-green.svg?style=true)](https://android-arsenal.com/details/1/4341) [![Release](https://jitpack.io/v/adrielcafe/AndroidAudioConverterEh.svg)](https://jitpack.io/#alessandrovito/AndroidAudioConverter)
+# AndroidAudioConverterEh
 
-# AndroidAudioConverter
-
-> Convert audio files inside your Android app easily. This is a wrapper of [FFmpeg-Android-Java](https://github.com/WritingMinds/ffmpeg-android-java) lib.
+> Convert audio files inside your Android app easily with enhanced support of latest SDk and with different architectures
+. This is a wrapper of [FFmpeg-Android-Java](https://github.com/WritingMinds/ffmpeg-android-java) lib.
 
 Supported formats:
 * AAC
@@ -12,11 +11,16 @@ Supported formats:
 * WAV
 * FLAC
 
-Lib size: ~9mb
+
+## Supported architecture
+* arm64-v8a
+* armeabi-v7a
+* x86
+* x86_64
 
 ## How To Use
 
-1 - Add this permission into your `AndroidManifest.xml` and [request in Android 6.0+](https://developer.android.com/training/permissions/requesting.html)
+1 - Add this permission into your `AndroidManifest.xml` and [request in Android 8.0+](https://developer.android.com/training/permissions/requesting.html)
 ```xml
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 ```
@@ -78,18 +82,18 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.alessandrovito:AndroidAudioConverterEh:0.0.8'
+  compile 'com.github.Alessandrovito:AndroidAudioConverterEh:1.3'
 }
 ```
 
 ## Dependencies
-* [FFmpeg-Android-Java](https://github.com/WritingMinds/ffmpeg-android-java)
+* [FFmpeg-Android-Java](https://github.com/WritingMinds/ffmpeg-android-java) This dependency is submitted as a module inside the library.
 
 ## License
 ```
 The MIT License (MIT)
 
-Copyright (c) 2016 Adriel Café
+Copyright (c) 2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
