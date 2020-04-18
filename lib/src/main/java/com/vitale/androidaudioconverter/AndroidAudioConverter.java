@@ -1,6 +1,7 @@
 package com.vitale.androidaudioconverter;
 
 import android.content.Context;
+import android.provider.MediaStore;
 
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.FFmpegExecuteResponseHandler;
@@ -8,6 +9,7 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
 import com.vitale.androidaudioconverter.callback.IConvertCallback;
 import com.vitale.androidaudioconverter.callback.ILoadCallback;
 import com.vitale.androidaudioconverter.model.AudioFormat;
+import com.vitale.androidaudioconverter.model.VideoFormat;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,11 @@ public class AndroidAudioConverter {
 
     private Context context;
     private File audioFile;
-    private AudioFormat format;
+    private AudioFormat format = null;
+    private VideoFormat videoFormat = null;
+    private String videoArtist;
+    private Long videoDuration;
+    private String videoAlbum;
     private IConvertCallback callback;
 
     private AndroidAudioConverter(Context context){
@@ -74,6 +80,27 @@ public class AndroidAudioConverter {
         return this;
     }
 
+    public AndroidAudioConverter setVideoFormat(VideoFormat videoFormat) {
+        this.videoFormat = videoFormat;
+        return this;
+    }
+
+    public AndroidAudioConverter setVideoArtist(String videoArtist) {
+        this.videoArtist = videoArtist;
+        return this;
+    }
+
+    public AndroidAudioConverter setVideoDuration(Long videoDuration) {
+        this.videoDuration = videoDuration;
+        return this;
+    }
+
+    public AndroidAudioConverter setVideoAlbum(String videoAlbum) {
+        this.videoAlbum = videoAlbum;
+        return this;
+    }
+
+
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
         this.callback = callback;
         return this;
@@ -92,8 +119,44 @@ public class AndroidAudioConverter {
             callback.onFailure(new IOException("Can't read the file. Missing permission?"));
             return;
         }
-        final File convertedFile = getConvertedFile(audioFile, format);
-        final String[] cmd = new String[]{"-y", "-i", audioFile.getPath(), convertedFile.getPath()};
+
+
+        if (format == null && videoFormat == null) {
+            callback.onFailure(new IOException("File audio or video not provided"));
+            return;
+        }
+
+        final File convertedFile = (format != null) ? getConvertedFile(audioFile, format) : getConvertedFile(audioFile, videoFormat);
+        String[] cmd = null;
+
+        /*
+        * 5.4 Main options
+        * The format is normally auto detected for input files and guessed from the file extension for output files,
+        *  so this option is not needed in most cases.
+        *
+        * -i url (input)
+        *    input file url
+        *
+        * For example audio
+        *   ffmpeg -y -i INPUT OUTPUT
+        *
+        * For example video
+        *   ffmpeg - y -i INPUT OUTPUT
+        *
+        *
+        * */
+
+        if (format != null) {
+            cmd = new String[]{"-y", "-i", audioFile.getPath(), convertedFile.getPath()};
+        } else if (videoFormat != null) {
+
+            String metadataArtist = "-metadata artist=\""+ videoArtist +"\"";
+            String metadataAlbum = "-metadata album=\""+ videoAlbum +"\"";
+            String metadataDuration = "-metadata title=\""+ videoDuration +"\"";
+
+            cmd = new String[]{"-y", "-i", audioFile.getPath(),  convertedFile.getPath(),metadataArtist,metadataAlbum,metadataDuration};
+        }
+
         try {
             FFmpeg.getInstance(context).execute(cmd, new FFmpegExecuteResponseHandler() {
                         @Override
@@ -127,6 +190,12 @@ public class AndroidAudioConverter {
     }
 
     private static File getConvertedFile(File originalFile, AudioFormat format){
+        String[] f = originalFile.getPath().split("\\.");
+        String filePath = originalFile.getPath().replace(f[f.length - 1], format.getFormat());
+        return new File(filePath);
+    }
+
+    private static File getConvertedFile(File originalFile, VideoFormat format){
         String[] f = originalFile.getPath().split("\\.");
         String filePath = originalFile.getPath().replace(f[f.length - 1], format.getFormat());
         return new File(filePath);
