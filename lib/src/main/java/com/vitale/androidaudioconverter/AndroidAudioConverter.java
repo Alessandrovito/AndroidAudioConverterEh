@@ -149,12 +149,15 @@ public class AndroidAudioConverter {
         if (format != null) {
             cmd = new String[]{"-y", "-i", audioFile.getPath(), convertedFile.getPath()};
         } else if (videoFormat != null) {
+            String metadata = "-metadata";
+            String metadataArtist = "artist="+videoArtist;
+            String metadataAlbum = "album="+ videoAlbum ;
+            String metadataDuration = "title="+ videoDuration;
 
-            String metadataArtist = "-metadata artist=\""+ videoArtist +"\"";
-            String metadataAlbum = "-metadata album=\""+ videoAlbum +"\"";
-            String metadataDuration = "-metadata title=\""+ videoDuration +"\"";
-
-            cmd = new String[]{"-y", "-i", audioFile.getPath(),  convertedFile.getPath(),metadataArtist,metadataAlbum,metadataDuration};
+            cmd = new String[]{"-y", "-i", audioFile.getPath(),  convertedFile.getPath(),
+                    metadata,metadataArtist,
+                    metadata,metadataAlbum,
+                    metadata,metadataDuration};
         }
 
         try {
