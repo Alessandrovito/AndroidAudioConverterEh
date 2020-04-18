@@ -1,9 +1,9 @@
 # AndroidAudioConverterEh
 
-> Convert audio files inside your Android app easily with enhanced support of latest SDk and with different architectures
+> Convert audio and video files inside your Android app easily with enhanced support of latest SDk and with different architectures
 . This is a wrapper of [FFmpeg-Android-Java](https://github.com/WritingMinds/ffmpeg-android-java) lib.
 
-Supported formats:
+Supported Audio formats:
 * AAC
 * MP3
 * M4A
@@ -11,6 +11,9 @@ Supported formats:
 * WAV
 * FLAC
 
+Supported Video formats:
+* MOW
+* MP4
 
 ## Supported architecture
 * arm64-v8a
