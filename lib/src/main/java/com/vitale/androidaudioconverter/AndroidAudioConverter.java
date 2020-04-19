@@ -23,8 +23,10 @@ public class AndroidAudioConverter {
     private AudioFormat format = null;
     private VideoFormat videoFormat = null;
     private String videoArtist;
-    private Long videoDuration;
+    private String videoTitle;
     private String videoAlbum;
+    private String videoDescription;
+
     private IConvertCallback callback;
 
     private AndroidAudioConverter(Context context){
@@ -90,15 +92,21 @@ public class AndroidAudioConverter {
         return this;
     }
 
-    public AndroidAudioConverter setVideoDuration(Long videoDuration) {
-        this.videoDuration = videoDuration;
-        return this;
-    }
-
     public AndroidAudioConverter setVideoAlbum(String videoAlbum) {
         this.videoAlbum = videoAlbum;
         return this;
     }
+
+    public AndroidAudioConverter setVideoTitle(String videoTitle) {
+        this.videoTitle = videoTitle;
+        return this;
+    }
+
+    public AndroidAudioConverter setVideoDescription(String videoDescription) {
+        this.videoDescription = videoDescription;
+        return this;
+    }
+
 
 
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
@@ -152,14 +160,17 @@ public class AndroidAudioConverter {
             String metadata = "-metadata";
             String metadataArtist = "artist=\""+videoArtist+"\"";
             String metadataAlbum = "album=\""+ videoAlbum+"\"";
-            String metadataDuration = "title=\""+ videoDuration+"\"";
+            String metadataTile= "title=\""+ videoTitle+"\"";
+            String metadataDescription = "title=\""+ videoDescription+"\"";
+
 
             System.out.println("Adding metadata to video encoding");
 
             cmd = new String[]{"-y", "-i", audioFile.getPath(),
                     metadata,metadataArtist,
                     metadata,metadataAlbum,
-                    metadata,metadataDuration,
+                    metadata,metadataTile,
+                    metadata,metadataDescription,
                     convertedFile.getPath()};
         }
 
