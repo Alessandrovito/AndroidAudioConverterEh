@@ -158,10 +158,10 @@ public class AndroidAudioConverter {
             cmd = new String[]{"-y", "-i", audioFile.getPath(), convertedFile.getPath()};
         } else if (videoFormat != null) {
             String metadata = "-metadata";
-            String metadataArtist = "artist=\""+videoArtist+"\"";
-            String metadataAlbum = "album=\""+ videoAlbum+"\"";
-            String metadataTile= "title=\""+ videoTitle+"\"";
-            String metadataDescription = "description=\""+ videoDescription+"\"";
+            String metadataArtist = "artist="+videoArtist;
+            String metadataAlbum = "album="+ videoAlbum;
+            String metadataTile= "title="+ videoTitle;
+            String metadataDescription = "description="+ videoDescription;
 
 
             System.out.println("Adding metadata to video encoding");
