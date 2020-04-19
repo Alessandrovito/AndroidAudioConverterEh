@@ -31,7 +31,6 @@ public class AndroidAudioConverter {
     private IConvertCallback callback;
 
     private final static String  METADATA = "-metadata";
-
     private final static String  FILTER = "-filter:v";
     private final static String  SCALE = "scale=";
 
@@ -119,9 +118,6 @@ public class AndroidAudioConverter {
     }
 
 
-
-
-
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
         this.callback = callback;
         return this;
@@ -194,7 +190,6 @@ public class AndroidAudioConverter {
             } else {
 
                 String scaleWidth = SCALE+videoScaleWithFixedWidth + ":-1";
-
                 cmd = new String[]{"-y", "-i", audioFile.getPath(),
                         METADATA, metadataArtist,
                         METADATA, metadataAlbum,
