@@ -26,8 +26,12 @@ public class AndroidAudioConverter {
     private String videoTitle;
     private String videoAlbum;
     private String videoDescription;
+    private String videoScaleWithFixedWidth;
 
     private IConvertCallback callback;
+
+    private final static String  METADATA = "-metadata";
+    private final static String  SCALE = "-scale=";
 
     private AndroidAudioConverter(Context context){
         this.context = context;
@@ -107,6 +111,13 @@ public class AndroidAudioConverter {
         return this;
     }
 
+    public AndroidAudioConverter setVideoScaleWithFixedWidth(String videoScaleWithFixedWidth) {
+        this.videoScaleWithFixedWidth = videoScaleWithFixedWidth;
+        return this;
+    }
+
+
+
 
 
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
@@ -154,10 +165,15 @@ public class AndroidAudioConverter {
         *
         * */
 
+        //Audio support
         if (format != null) {
+
             cmd = new String[]{"-y", "-i", audioFile.getPath(), convertedFile.getPath()};
+
+        //Video support
         } else if (videoFormat != null) {
-            String metadata = "-metadata";
+
+
             String metadataArtist = "artist="+videoArtist;
             String metadataAlbum = "album="+ videoAlbum;
             String metadataTile= "title="+ videoTitle;
@@ -166,12 +182,25 @@ public class AndroidAudioConverter {
 
             System.out.println("Adding metadata to video encoding");
 
-            cmd = new String[]{"-y", "-i", audioFile.getPath(),
-                    metadata,metadataArtist,
-                    metadata,metadataAlbum,
-                    metadata,metadataTile,
-                    metadata,metadataDescription,
-                    convertedFile.getPath()};
+            if (videoScaleWithFixedWidth == null) {
+                cmd = new String[]{"-y", "-i", audioFile.getPath(),
+                        METADATA, metadataArtist,
+                        METADATA, metadataAlbum,
+                        METADATA, metadataTile,
+                        METADATA, metadataDescription,
+                        convertedFile.getPath()};
+            } else {
+
+                String scaleWidth = SCALE+videoScaleWithFixedWidth + ":-1";
+
+                cmd = new String[]{"-y", "-i", audioFile.getPath(),
+                        METADATA, metadataArtist,
+                        METADATA, metadataAlbum,
+                        METADATA, metadataTile,
+                        METADATA, metadataDescription,
+                        scaleWidth,
+                        convertedFile.getPath()};
+            }
         }
 
         try {
