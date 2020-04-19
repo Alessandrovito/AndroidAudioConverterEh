@@ -189,7 +189,7 @@ public class AndroidAudioConverter {
                         convertedFile.getPath()};
             } else {
 
-                String scaleWidth = SCALE+videoScaleWithFixedWidth + ":-1";
+                String scaleWidth = SCALE+videoScaleWithFixedWidth + ":-2";
                 cmd = new String[]{"-y", "-i", audioFile.getPath(),
                         METADATA, metadataArtist,
                         METADATA, metadataAlbum,
