@@ -156,10 +156,11 @@ public class AndroidAudioConverter {
 
             System.out.println("Adding metadata to video encoding");
 
-            cmd = new String[]{"-y", "-i", audioFile.getPath(),  convertedFile.getPath(),
+            cmd = new String[]{"-y", "-i", audioFile.getPath(),
                     metadata,metadataArtist,
                     metadata,metadataAlbum,
-                    metadata,metadataDuration};
+                    metadata,metadataDuration,
+                    convertedFile.getPath()};
         }
 
         try {
