@@ -161,7 +161,7 @@ public class AndroidAudioConverter {
             String metadataArtist = "artist=\""+videoArtist+"\"";
             String metadataAlbum = "album=\""+ videoAlbum+"\"";
             String metadataTile= "title=\""+ videoTitle+"\"";
-            String metadataDescription = "title=\""+ videoDescription+"\"";
+            String metadataDescription = "description=\""+ videoDescription+"\"";
 
 
             System.out.println("Adding metadata to video encoding");
