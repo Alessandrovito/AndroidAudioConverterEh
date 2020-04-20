@@ -27,6 +27,7 @@ public class AndroidAudioConverter {
     private String videoAlbum;
     private String videoDescription;
     private String videoScaleWithFixedWidth;
+    private String videoFramerate;
 
     private IConvertCallback callback;
 
@@ -47,7 +48,6 @@ public class AndroidAudioConverter {
             FFmpeg.getInstance(context).loadBinary(new FFmpegLoadBinaryResponseHandler() {
                         @Override
                         public void onStart() {
-
                         }
 
                         @Override
@@ -117,6 +117,10 @@ public class AndroidAudioConverter {
         return this;
     }
 
+    public AndroidAudioConverter setVideoFramerate(String videoFramerate) {
+        this.videoFramerate = videoFramerate;
+        return this;
+    }
 
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
         this.callback = callback;
@@ -187,6 +191,17 @@ public class AndroidAudioConverter {
                         METADATA, metadataTile,
                         METADATA, metadataDescription,
                         convertedFile.getPath()};
+
+                if (videoFramerate != null) {
+                            cmd = new String[]{"-y", "-i", audioFile.getPath(),
+                            METADATA, metadataArtist,
+                            METADATA, metadataAlbum,
+                            METADATA, metadataTile,
+                            METADATA, metadataDescription,
+                            "-r",videoFramerate,
+                            convertedFile.getPath()};
+                }
+
             } else {
 
                 String scaleWidth = SCALE+videoScaleWithFixedWidth + ":-2";
@@ -197,6 +212,16 @@ public class AndroidAudioConverter {
                         METADATA, metadataDescription,
                         FILTER,scaleWidth,
                         convertedFile.getPath()};
+                if (videoFramerate != null) {
+                    cmd = new String[]{"-y", "-i", audioFile.getPath(),
+                            METADATA, metadataArtist,
+                            METADATA, metadataAlbum,
+                            METADATA, metadataTile,
+                            METADATA, metadataDescription,
+                            "-r",videoFramerate,
+                            FILTER,scaleWidth,
+                            convertedFile.getPath()};
+                }
             }
         }
 
