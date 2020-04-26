@@ -218,6 +218,11 @@ public class AndroidAudioConverter {
             if (videoBitrateBitPerSec != null) {
                 String KiloBitRate = videoBitrateBitPerSec + "k";
 
+
+
+                ffmpegOptionList.add("-c:v");
+                ffmpegOptionList.add("libx264");
+
                 ffmpegOptionList.add("-b:v");
                 ffmpegOptionList.add(KiloBitRate);
                 ffmpegOptionList.add("-maxrate");
