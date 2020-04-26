@@ -13,6 +13,9 @@ import com.vitale.androidaudioconverter.model.VideoFormat;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AndroidAudioConverter {
 
@@ -28,6 +31,8 @@ public class AndroidAudioConverter {
     private String videoDescription;
     private String videoScaleWithFixedWidth;
     private String videoFramerate;
+    private String videoBitrateBitPerSec; // in kbits/p
+
 
     private IConvertCallback callback;
 
@@ -122,6 +127,11 @@ public class AndroidAudioConverter {
         return this;
     }
 
+    public AndroidAudioConverter setVideoBitrateBitPerSec(String videoBitrateBitPerSec) {
+        this.videoBitrateBitPerSec = videoBitrateBitPerSec;
+        return this;
+    }
+
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
         this.callback = callback;
         return this;
@@ -174,16 +184,55 @@ public class AndroidAudioConverter {
 
         //Video support
         } else if (videoFormat != null) {
-
-
             String metadataArtist = "artist="+videoArtist;
             String metadataAlbum = "album="+ videoAlbum;
             String metadataTile= "title="+ videoTitle;
             String metadataDescription = "description="+ videoDescription;
 
+            List<String> ffmpegOptionList = new ArrayList<>(100);
 
-            System.out.println("Adding metadata to video encoding");
+            ffmpegOptionList.add("-y");
+            ffmpegOptionList.add("-i");
+            ffmpegOptionList.add(audioFile.getPath());
+            ffmpegOptionList.add(METADATA);
+            ffmpegOptionList.add(metadataArtist);
+            ffmpegOptionList.add(METADATA);
+            ffmpegOptionList.add(metadataAlbum);
+            ffmpegOptionList.add(METADATA);
+            ffmpegOptionList.add(metadataTile);
+            ffmpegOptionList.add(METADATA);
+            ffmpegOptionList.add(metadataDescription);
 
+            if (videoScaleWithFixedWidth != null) {
+                String scaleWidth = SCALE+videoScaleWithFixedWidth + ":-2";
+
+                ffmpegOptionList.add(FILTER);
+                ffmpegOptionList.add(scaleWidth);
+            }
+
+            if (videoFramerate != null) {
+                ffmpegOptionList.add("-r");
+                ffmpegOptionList.add(videoFramerate);
+            }
+
+            if (videoBitrateBitPerSec != null) {
+                String KiloBitRate = videoBitrateBitPerSec + "k";
+
+                ffmpegOptionList.add("-b:v");
+                ffmpegOptionList.add(KiloBitRate);
+                ffmpegOptionList.add("-maxrate");
+                ffmpegOptionList.add(KiloBitRate);
+                ffmpegOptionList.add("-bufsize");
+                ffmpegOptionList.add(KiloBitRate);
+            }
+
+            ffmpegOptionList.add(convertedFile.getPath());
+
+            cmd = ffmpegOptionList.toArray(new String[0]);
+
+            System.out.println("FFmpeg options : " + Arrays.toString(cmd));
+
+            /*
             if (videoScaleWithFixedWidth == null) {
                 cmd = new String[]{"-y", "-i", audioFile.getPath(),
                         METADATA, metadataArtist,
@@ -212,6 +261,7 @@ public class AndroidAudioConverter {
                         METADATA, metadataDescription,
                         FILTER,scaleWidth,
                         convertedFile.getPath()};
+
                 if (videoFramerate != null) {
                     cmd = new String[]{"-y", "-i", audioFile.getPath(),
                             METADATA, metadataArtist,
@@ -223,6 +273,10 @@ public class AndroidAudioConverter {
                             convertedFile.getPath()};
                 }
             }
+
+             */
+
+
         }
 
         try {
