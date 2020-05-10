@@ -356,6 +356,8 @@ public class AndroidAudioConverter {
     private static File getConvertedFile(File originalFile, VideoFormat format){
         String[] f = originalFile.getPath().split("\\.");
         String filePath = originalFile.getPath().replace(f[f.length - 1], format.getFormat());
+        String suffixFileName ="-CONV";
+        filePath = filePath.replace(f[f.length - 2], f[f.length - 2] +suffixFileName);
         return new File(filePath);
     }
 }
