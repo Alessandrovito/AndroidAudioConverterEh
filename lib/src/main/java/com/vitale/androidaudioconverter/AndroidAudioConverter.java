@@ -141,13 +141,13 @@ public class AndroidAudioConverter {
         return this;
     }
 
-    public AndroidAudioConverter setVideoEncoder(VideoEncoder videoEncoder) {
+    public AndroidAudioConverter setVideoEncoder(VideoEncoder selectEncoder) {
         this.selectEncoder = selectEncoder;
         return this;
     }
 
     public AndroidAudioConverter setOptionVideoEncoder(String optionVideoEncode) {
-        this.encoderOption = encoderOption;
+        this.encoderOption = optionVideoEncode;
         return this;
     }
 
