@@ -240,12 +240,12 @@ public class AndroidAudioConverter {
                 ffmpegOptionList.add(selectEncoder.getEncoder());
 
                 if (encoderOption != null && selectEncoder == ENCODER_MPEG4 ) {
-                    ffmpegOptionList.add("-preset");
+                    ffmpegOptionList.add("-q:v");
                     ffmpegOptionList.add(encoderOption);
                 }
 
                 if (encoderOption != null && selectEncoder == ENCODER_H264 ) {
-                    ffmpegOptionList.add("-q:v");
+                    ffmpegOptionList.add("-preset");
                     ffmpegOptionList.add(encoderOption);
                 }
             }
