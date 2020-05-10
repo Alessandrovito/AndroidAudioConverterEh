@@ -9,6 +9,7 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpegLoadBinaryResponseHandler;
 import com.vitale.androidaudioconverter.callback.IConvertCallback;
 import com.vitale.androidaudioconverter.callback.ILoadCallback;
 import com.vitale.androidaudioconverter.model.AudioFormat;
+import com.vitale.androidaudioconverter.model.VideoEncoder;
 import com.vitale.androidaudioconverter.model.VideoFormat;
 
 import java.io.File;
@@ -16,6 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.vitale.androidaudioconverter.model.VideoEncoder.ENCODER_H264;
+import static com.vitale.androidaudioconverter.model.VideoEncoder.ENCODER_MPEG4;
 
 public class AndroidAudioConverter {
 
@@ -32,6 +36,11 @@ public class AndroidAudioConverter {
     private String videoScaleWithFixedWidth;
     private String videoFramerate;
     private String videoBitrateBitPerSec; // in kbits/p
+
+    private VideoEncoder selectEncoder;
+    private String encoderOption;
+
+
 
 
     private IConvertCallback callback;
@@ -132,6 +141,16 @@ public class AndroidAudioConverter {
         return this;
     }
 
+    public AndroidAudioConverter setVideoEncoder(VideoEncoder videoEncoder) {
+        this.selectEncoder = selectEncoder;
+        return this;
+    }
+
+    public AndroidAudioConverter setOptionVideoEncoder(String optionVideoEncode) {
+        this.encoderOption = encoderOption;
+        return this;
+    }
+
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
         this.callback = callback;
         return this;
@@ -215,13 +234,24 @@ public class AndroidAudioConverter {
                 ffmpegOptionList.add(videoFramerate);
             }
 
+
+            if (selectEncoder != null) {
+                ffmpegOptionList.add("-c:v");
+                ffmpegOptionList.add(selectEncoder.getEncoder());
+
+                if (encoderOption != null && selectEncoder == ENCODER_MPEG4 ) {
+                    ffmpegOptionList.add("-preset");
+                    ffmpegOptionList.add(encoderOption);
+                }
+
+                if (encoderOption != null && selectEncoder == ENCODER_H264 ) {
+                    ffmpegOptionList.add("-q:v");
+                    ffmpegOptionList.add(encoderOption);
+                }
+            }
+
             if (videoBitrateBitPerSec != null) {
                 String KiloBitRate = videoBitrateBitPerSec + "k";
-
-
-
-                ffmpegOptionList.add("-c:v");
-                ffmpegOptionList.add("libx264");
 
                 ffmpegOptionList.add("-b:v");
                 ffmpegOptionList.add(KiloBitRate);
@@ -230,6 +260,7 @@ public class AndroidAudioConverter {
                 ffmpegOptionList.add("-bufsize");
                 ffmpegOptionList.add(KiloBitRate);
             }
+
 
             ffmpegOptionList.add(convertedFile.getPath());
 
