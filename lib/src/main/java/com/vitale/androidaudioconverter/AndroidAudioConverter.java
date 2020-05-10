@@ -266,7 +266,7 @@ public class AndroidAudioConverter {
 
             cmd = ffmpegOptionList.toArray(new String[0]);
 
-            System.out.println("FFmpeg options : " + Arrays.toString(cmd));
+            System.out.println("FFmpeg all options : " + Arrays.toString(cmd));
 
             /*
             if (videoScaleWithFixedWidth == null) {
