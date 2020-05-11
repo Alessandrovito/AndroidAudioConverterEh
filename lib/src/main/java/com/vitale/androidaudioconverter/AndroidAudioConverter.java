@@ -40,6 +40,8 @@ public class AndroidAudioConverter {
     private VideoEncoder selectEncoder;
     private String encoderOption;
 
+    private String constantRateFactor;
+
 
 
 
@@ -151,6 +153,12 @@ public class AndroidAudioConverter {
         return this;
     }
 
+    public AndroidAudioConverter setConstantRateFactor(String constantRateFactor) {
+        this.constantRateFactor = constantRateFactor;
+        return this;
+    }
+
+
     public AndroidAudioConverter setCallback(IConvertCallback callback) {
         this.callback = callback;
         return this;
@@ -247,6 +255,11 @@ public class AndroidAudioConverter {
                 if (encoderOption != null && selectEncoder == ENCODER_H264 ) {
                     ffmpegOptionList.add("-preset");
                     ffmpegOptionList.add(encoderOption);
+
+                    if (constantRateFactor != null) {
+                        ffmpegOptionList.add("-crf");
+                        ffmpegOptionList.add(constantRateFactor);
+                    }
                 }
             }
 
@@ -260,7 +273,6 @@ public class AndroidAudioConverter {
                 ffmpegOptionList.add("-bufsize");
                 ffmpegOptionList.add(KiloBitRate);
             }
-
 
             ffmpegOptionList.add(convertedFile.getPath());
 
