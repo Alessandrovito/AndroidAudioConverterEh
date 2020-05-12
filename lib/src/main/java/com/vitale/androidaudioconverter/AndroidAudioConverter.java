@@ -34,6 +34,7 @@ public class AndroidAudioConverter {
     private String videoAlbum;
     private String videoDescription;
     private String videoScaleWithFixedWidth;
+    private String videoScaleWithFixedHeight;
     private String videoFramerate;
     private String videoBitrateBitPerSec; // in kbits/p
 
@@ -132,6 +133,13 @@ public class AndroidAudioConverter {
         this.videoScaleWithFixedWidth = videoScaleWithFixedWidth;
         return this;
     }
+
+    public AndroidAudioConverter setVideoScaleWithFixedHeight(String videoScaleWithFixedHeight) {
+        this.videoScaleWithFixedHeight = videoScaleWithFixedHeight;
+        return this;
+    }
+
+
 
     public AndroidAudioConverter setVideoFramerate(String videoFramerate) {
         this.videoFramerate = videoFramerate;
@@ -235,7 +243,16 @@ public class AndroidAudioConverter {
 
                 ffmpegOptionList.add(FILTER);
                 ffmpegOptionList.add(scaleWidth);
+            } else if (videoScaleWithFixedHeight != null) {
+
+
+                String scaleWidth = SCALE + "-2:"  +videoScaleWithFixedHeight;
+
+                ffmpegOptionList.add(FILTER);
+                ffmpegOptionList.add(scaleWidth);
+
             }
+
 
             if (videoFramerate != null) {
                 ffmpegOptionList.add("-r");
